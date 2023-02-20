@@ -5,7 +5,7 @@ def simulator_entry(hparams):
     UE_list, BS_list, shadowFad_dB_map = init_all(hparams)
     init_step_idx = 0
     simulate(hparams, UE_list, BS_list, shadowFad_dB_map, init_step_idx)
-    pass
+
 
 
 

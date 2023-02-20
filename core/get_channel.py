@@ -1,7 +1,7 @@
 import numpy as np
 from config.settings import *
 
-def large_scale_channel(hparam, BS_list, UE_list, shadow_map):
+def large_scale_fading(hparam, BS_list, UE_list, shadow_map):
     '''
     大尺度信道衰落=路径衰落+阴影衰落
     :param hparam: 仿真参数
@@ -16,7 +16,7 @@ def large_scale_channel(hparam, BS_list, UE_list, shadow_map):
     large_scale_fading_dB = np.zeros((nBS, nUE))
     for iUE in range(nUE):
         for iBS in range(nBS):
-            large_fading_dB = get_large_fading_dB(hparam, BS_list[iBS], UE_list[iUE], shadow_map, hparam.scene)
+            large_fading_dB = get_large_fading_dB(hparam, BS_list[iBS], UE_list[iUE], shadow_map)
             large_scale_fading_dB[iBS, iUE] = large_fading_dB
 
     # large_scale_channel = 10 ** (-large_scale_fading_dB / 20)
@@ -26,28 +26,34 @@ def large_scale_channel(hparam, BS_list, UE_list, shadow_map):
 
 def get_large_fading_dB(hparam, BS, UE, shadow_map):
     # if not UE.active:mlarge_fading_dB = np.Inf
-    large_fading_dB = get_large_fading_dB_from_posi(hparam, UE.posi, BS.posi, BS.no, shadow_map, BS.type)
+    large_fading_dB = get_large_fading_dB_from_posi(hparam, UE.posi, BS.posi, BS.no, shadow_map)
     return large_fading_dB
 
 
-def get_large_fading_dB_from_posi(hparam, UE_posi, BS_posi, BS_no, shadow_map, BS_type, scene):
+def get_large_fading_dB_from_posi(hparam, UE_posi, BS_posi, BS_no, shadow_map):
     antGain = Macro.antGaindB
     dFactor = Macro.dFactordB
     pLoss1m = Macro.pLoss1mdB
 
     distServer = np.abs(UE_posi - BS_posi)  # 用户-基站距离
 
-    origin_x_point = hparam.origin_x
-    origin_y_point = hparam.origin_y
-    x_temp = int(np.ceil((np.real(UE_posi) - origin_x_point) / hparam.posi_resolution)) - 1
-    y_temp = int(np.ceil((np.imag(UE_posi) - origin_y_point) / hparam.posi_resolution)) - 1
-    x_temp = np.min((shadow_map.map.shape[2] - 2, x_temp))
-    y_temp = np.min((shadow_map.map.shape[1] - 2, y_temp))
-    x_temp = np.max((0, x_temp))
-    y_temp = np.max((0, y_temp))
-
-    # _shadow = shadow_map.map[BS_no][y_temp, x_temp]
-    _shadow = shadow_map.map[BS_no][x_temp, y_temp]
+    if shadow_map is None:
+        if hparam.shadow_type == 'none':
+            _shadow = 0
+        elif hparam.shadow_type == 'random':
+            _shadow = np.random.normal(0, hparam.shadow_std)
+        else:
+            raise Exception('Unsupported shadow type')
+    else:
+        origin_x_point = np.real(hparam.origin_point)
+        origin_y_point = np.imag(hparam.origin_point)
+        x_temp = (np.ceil((np.real(UE_posi) - origin_x_point) / hparam.posi_resol)).astype(np.int) - 1
+        y_temp = (np.ceil((np.imag(UE_posi) - origin_y_point) / hparam.posi_resol)).astype(np.int) - 1
+        # x_temp = np.min((shadow_map.shape[1] - 2, x_temp))
+        # y_temp = np.min((shadow_map.shape[2] - 2, y_temp))
+        # x_temp = np.max((0, x_temp))
+        # y_temp = np.max((0, y_temp))
+        _shadow = shadow_map[BS_no][x_temp, y_temp]
     large_fading_dB = pLoss1m + dFactor * np.log10(distServer) + _shadow - antGain
     return large_fading_dB
 

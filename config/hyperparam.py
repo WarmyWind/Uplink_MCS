@@ -19,9 +19,22 @@ parser = argparse.ArgumentParser()
 #     type=str,
 #     help="Specify task"
 # )
+parser.add_argument("--step_end_idx", type=int, default=40, help="Number of simulation steps")
+parser.add_argument("--est_method",
+                    type=str,
+                    default='outdated',
+                    choices=["ideal", "outdated"],
+                    help="Method of estimation",
+                    )
 parser.add_argument("--nBS", type=int, default=7, help="Number of BS")
 parser.add_argument("--network_topo", type=str, default='cell')
 parser.add_argument("--dist", type=int, default=150, help="Distance between two BSs")
+parser.add_argument("--shadow_type",
+                    type=str,
+                    default='fixed',
+                    choices=['none', 'random', 'fixed'],
+                    )
+parser.add_argument("--shadow_std", type=float, default=6)
 parser.add_argument(
     "--shadow_filepath",
     default="db/std8_corr5.mat",
@@ -45,12 +58,12 @@ parser.add_argument("--HO_type", type=str, default='none', choices=["none", "ide
 # parser.add_argument("--weight_decay", type=float, default=5e-4, help="Weight decay")
 
 timestamp = datetime.now().strftime("%Y-%m-%d-%A-%H-%M-%S")
-parser.add_argument(
-    "--output_dir",
-    default='runs/' + parser.get_default("task") + '/' + parser.get_default("method") + '/' + timestamp,
-    type=str,
-    help="Specify output directory"
-)
+# parser.add_argument(
+#     "--output_dir",
+#     default='runs/' + parser.get_default("task") + '/' + parser.get_default("method") + '/' + timestamp,
+#     type=str,
+#     help="Specify output directory"
+# )
 
 parser.add_argument("--seed", default=42, type=int, help="Seed to use for training")
 

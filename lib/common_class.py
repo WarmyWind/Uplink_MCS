@@ -79,6 +79,8 @@ class BS:
         self.Ptmax_dBm = Macro.Ptmax_dBm
         self.Ptmax = Macro.Ptmax
         self.history_interference = []
+        self.serv_UE_list = []
+        self.interference = 0
 
         # self.RB_per_UE = RB_per_UE
         # self.opt_UE_per_RB = opt_UE_per_RB
