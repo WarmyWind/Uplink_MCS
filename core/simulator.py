@@ -1,4 +1,4 @@
-from core.info_update import update_posi, update_CSI, update_CQI, update_spec_effi, init_access
+from core.info_update import update_posi, update_access, update_CSI, update_CQI, update_spec_effi, init_access
 from lib.utils import progress_bar
 from core.evaluate import eval_spec_effi
 import numpy as np
@@ -6,6 +6,7 @@ import numpy as np
 def step(hparam, UE_list, BS_list, shadowFad_dB_map, step_idx):
     # Update real and estimated infomation
     update_posi(UE_list, step_idx)
+    update_access(hparam, UE_list, BS_list)
     update_CSI(hparam, UE_list, BS_list, shadowFad_dB_map)
     update_CQI(UE_list)
     update_spec_effi(UE_list)

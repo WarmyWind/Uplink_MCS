@@ -48,6 +48,14 @@ def update_posi(UE_list, step_idx):
         _UE.posi = _UE.tra[step_idx]
     return
 
+def update_access(hparams, UE_list, BS_list):
+    if hparams.HO_type == 'none':
+        pass
+    elif hparams.HO_type == 'ideal':
+        # TODO
+        pass
+    else:
+        raise Exception('Invalid HO type')
 
 def update_update_arrival_power(UE_list, channel_fading_dB):
     # Update arrival power to the serving_BS for every UE
@@ -82,11 +90,16 @@ def update_est_SINR(hparam, UE_list, BS_list):
             _BS = BS_list[_UE.serv_BS]
             _UE.est_SINR_dB = calculate_SINR_dB(_UE.arrival_power,
                                                 _BS.interference, sigma2)
+            _UE.est_SINR_dB_std = 0
     elif hparam.est_method == 'outdated':
         for _UE in UE_list:
             _BS = BS_list[_UE.serv_BS]
             _UE.est_SINR_dB = calculate_SINR_dB(_UE.history_arrival_power[-1],
                                                 _BS.interference, sigma2)
+            _UE.est_SINR_dB_std = 0
+    elif hparam.est_method == 'NN':
+        # TODO
+        pass
     else:
         raise Exception('Unsupported estimation method!')
     return

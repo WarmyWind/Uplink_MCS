@@ -10,6 +10,13 @@ class UE:
         self.Ptmax_dBm = User.Ptmax_dBm
         self.Ptmax = User.Ptmax
         self.history_arrival_power = []
+
+        self.serv_BS = -1
+        self.HO_type = 'none'  # 'none' or 'ideal HO'
+        self.arrival_power = 0
+        self.SINR_dB = -np.Inf
+        self.est_SINR_dB = -np.Inf
+        self.est_SINR_dB_std = 0
         # self.posi_record = [posi for _ in range(record_len)]
         # self.future_posi = [posi for _ in range(record_len)]
         # self.type = type
@@ -21,10 +28,7 @@ class UE:
         # self.active = active
         # self.Rreq = 0
         # self.state = 'unserved'  # 'served', 'unserved'
-        self.serv_BS = -1
-        self.HO_type = 'none'  # 'none' or 'ideal HO'
-        self.arrival_power = 0
-        self.SINR_dB = -np.Inf
+
         # self.serv_BS_L3_h = None  # 服务基站的信道功率L3测量值
         # self.ToS = -1  # 在当前服务小区的停留时间
         # self.MTS = 100  # 最小停留时间参数

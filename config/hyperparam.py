@@ -23,7 +23,7 @@ parser.add_argument("--step_end_idx", type=int, default=40, help="Number of simu
 parser.add_argument("--est_method",
                     type=str,
                     default='outdated',
-                    choices=["ideal", "outdated"],
+                    choices=["ideal", "outdated", "NN"],
                     help="Method of estimation",
                     )
 parser.add_argument("--nBS", type=int, default=7, help="Number of BS")
