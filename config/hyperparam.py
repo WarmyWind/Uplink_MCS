@@ -20,11 +20,23 @@ parser = argparse.ArgumentParser()
 #     help="Specify task"
 # )
 parser.add_argument("--step_end_idx", type=int, default=40, help="Number of simulation steps")
-parser.add_argument("--est_method",
+parser.add_argument("--power_est_method",
                     type=str,
-                    default='outdated',
+                    default='NN',
                     choices=["ideal", "outdated", "NN"],
-                    help="Method of estimation",
+                    help="Method of arrival power estimation",
+                    )
+parser.add_argument("--itf_est_method",
+                    type=str,
+                    default='ideal',
+                    choices=["ideal", "outdated", "NN"],
+                    help="Method of interference estimation",
+                    )
+parser.add_argument("--CQI_est_method",
+                    type=str,
+                    default='best',
+                    choices=["direct", "best"],
+                    help="Method of CQI estimation",
                     )
 parser.add_argument("--nBS", type=int, default=7, help="Number of BS")
 parser.add_argument("--network_topo", type=str, default='cell')
@@ -34,10 +46,11 @@ parser.add_argument("--shadow_type",
                     default='fixed',
                     choices=['none', 'random', 'fixed'],
                     )
-parser.add_argument("--shadow_std", type=float, default=6)
+parser.add_argument("--shadow_std", type=float, default=8)
+
 parser.add_argument(
     "--shadow_filepath",
-    default="db/std8_corr5.mat",
+    default="db/std8_corr50.mat",
     help="Shadowfad file path",
 )
 parser.add_argument("--posi_resol", type=int, default=1.5, help="Position resolution in shadow fading map")
@@ -49,13 +62,6 @@ parser.add_argument(
     help="UE trajectory file path",
 )
 parser.add_argument("--HO_type", type=str, default='none', choices=["none", "ideal"], help="HO type")
-
-# parser.add_argument("--learning_rate", type=float, default=1e-3, help="Learning rate")
-# parser.add_argument("--input_dim", type=int, default=(32, 32), help="input dimension")
-# parser.add_argument("--output_dim", type=int, default=10, help="output dimension, i.e. the number of classification")
-# parser.add_argument("--hidden_dim", type=int, default=120, help="NN hidden layer dimension")
-# parser.add_argument("--hidden_depth", type=int, default=5, help="Hidden layer depth for NN")
-# parser.add_argument("--weight_decay", type=float, default=5e-4, help="Weight decay")
 
 timestamp = datetime.now().strftime("%Y-%m-%d-%A-%H-%M-%S")
 # parser.add_argument(

@@ -8,7 +8,13 @@ def cal_expected_efficiency(over_threshold_likelihood, CQI):
 
 
 def estimate_best_CQI(*args):
-    SINR, std = args[0]
+    if len(args) == 1:
+        assert isinstance(args[0], tuple) and len(args[0]) == 2
+        SINR, std = args[0]
+    elif len(args) == 2:
+        SINR, std = args[0], args[1]
+    else:
+        raise Exception('Invalid args')
 
     norm = stats.norm(loc=SINR, scale=std)
     threshold_cdf = norm.cdf(SINR_dB_threshold)

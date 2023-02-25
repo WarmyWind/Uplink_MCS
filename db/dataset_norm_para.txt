@@ -1,0 +1,19 @@
+#file_path = '8dB_50corr_large_fading_dB_data.npy'
+# mean = 73.15985075872533
+# std = 8.892841565665687
+
+# file_path = '8dB_10corr_large_fading_dB_data.npy'
+# mean = 73.9509033483911
+# std = 9.951487711154964
+
+# file_path = '8dB_5corr_large_fading_dB_data.npy'
+# mean = 73.95431849519642
+# std = 9.95093532689939
+
+# file_path = '8dBnoise_large_fading_dB_data.npy'
+# mean = 73.56853596368727
+# std = 9.219616065619038
+
+# file_path = '3dBnoise_large_fading_dB_data.npy'
+# mean = 73.46376171091826
+# std = 5.514566913794413

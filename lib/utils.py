@@ -21,6 +21,9 @@ def power_to_dB(power):
         return -np.Inf
     return 10*np.log10(power)
 
+def power_to_dBm(power):
+    return 10 * np.log10(1000*power)
+
 def dB_to_power(power_dB):
     return 10**(power_dB/10)
 

@@ -2,6 +2,8 @@ from config.hyperparam import hparams
 from core.data_init_utils import load_UE_posi, build_network_topo
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
 
 def plot_hexgon(ax, center, dist):
     radius = dist/np.sqrt(3)
@@ -44,5 +46,5 @@ if __name__ == '__main__':
     UE_tra = load_UE_posi(hparams)
     UE_tra = np.reshape(UE_tra, (UE_tra.shape[2],-1))
     BS_posi = build_network_topo(hparams)
-    ax = plot_UE_trajectory(BS_posi, UE_tra)
+    ax = plot_UE_trajectory(BS_posi, UE_tra[:,15:20])
     plt.show()

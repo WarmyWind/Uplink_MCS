@@ -78,13 +78,13 @@ def generate_SINR(lower, upper, step=np.pi/20, length=5000, noise_std=1):
 
 if __name__ == '__main__':
     def generate_example_UE_tra(save=True):
-        one_cell_UE_tra = _one_cell_with_two_road(dist=150, road_width=20, UE_num=50, velocity=15,
+        one_cell_UE_tra = _one_cell_with_two_road(dist=150, road_width=20, UE_num=5, velocity=15,
                                          time_interval=0.1, duration=5)
         print('one_cell_UE_tra shape:', one_cell_UE_tra.shape)
         from core.network_topo import cell_struction
         BS_posi = cell_struction(7, 150)
         from tests.plot_tra import plot_UE_trajectory
-        ax = plot_UE_trajectory(BS_posi, (one_cell_UE_tra+BS_posi[6]).T)
+        ax = plot_UE_trajectory(BS_posi, (one_cell_UE_tra+BS_posi[3]).T)
         import matplotlib.pyplot as plt
         plt.show()
         UE_tra = generate_UE_tra(BS_posi, dist=150, road_width=20, nUE_per_cell=10, velocity=15,
@@ -97,12 +97,17 @@ if __name__ == '__main__':
         from config.hyperparam import hparams
         from core.data_init_utils import load_shadowfad_map
         from core.network_topo import cell_struction
-        shadowFad_dB_map = load_shadowfad_map(hparams)
+
         BS_posi = cell_struction(7, 150)
         UE_tra = generate_UE_tra(BS_posi, dist=150, road_width=20, nUE_per_cell=100, velocity=15,
                                          time_interval=0.1, duration=5)
+
+        # hparams.shadow_type = 'random'
+        # hparams.shadow_std = 3
+        shadowFad_dB_map = load_shadowfad_map(hparams)
         large_fading_dB_data = generate_large_scale_fading(hparams, BS_posi, UE_tra, shadowFad_dB_map)
         if save:
-            np.save('../db/large_fading_dB_data.npy', large_fading_dB_data, allow_pickle=True)
+            np.save('../db/8dB_50corr_large_fading_dB_data.npy', large_fading_dB_data, allow_pickle=True)
 
     generate_large_fading_dataset(save=True)
+    # generate_example_UE_tra(save=False)

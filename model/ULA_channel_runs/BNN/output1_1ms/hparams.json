@@ -1,0 +1,21 @@
+{
+    "batch_size": 2048,
+    "data_gap": 1,
+    "dataset_path": "Dataset/normed_speed1_3_1ms_channel_dataset.npy",
+    "dropout_rate": 0.1,
+    "epochs": 2000,
+    "hidden_depth": 3,
+    "hidden_dim": 512,
+    "input_dim": 160,
+    "learning_rate": 0.0001,
+    "method": "BNN",
+    "noise_estimation": "hetero",
+    "norm": false,
+    "num_net": 10,
+    "only_output_layer": true,
+    "output_dim": 32,
+    "output_dir": "runs/ULA_channel/BNN/2023-02-24-Friday-21-20-14",
+    "sample_nbr": 5,
+    "seed": 42,
+    "task": "ULA_channel"
+}

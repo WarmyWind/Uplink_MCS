@@ -9,14 +9,18 @@ class UE:
         self.posi = None
         self.Ptmax_dBm = User.Ptmax_dBm
         self.Ptmax = User.Ptmax
-        self.history_arrival_power = []
 
         self.serv_BS = -1
         self.HO_type = 'none'  # 'none' or 'ideal HO'
-        self.arrival_power = 0
+
+        self.arrival_power_dBm = -np.Inf
+        self.est_arrival_power_dBm = -np.Inf
+        self.history_arrival_power_dBm = []
+
         self.SINR_dB = -np.Inf
         self.est_SINR_dB = -np.Inf
         self.est_SINR_dB_std = 0
+
         # self.posi_record = [posi for _ in range(record_len)]
         # self.future_posi = [posi for _ in range(record_len)]
         # self.type = type
@@ -82,9 +86,11 @@ class BS:
         self.nNt = Macro.nNt
         self.Ptmax_dBm = Macro.Ptmax_dBm
         self.Ptmax = Macro.Ptmax
+        self.interference = np.Inf
+        self.est_interference = np.Inf
         self.history_interference = []
         self.serv_UE_list = []
-        self.interference = 0
+
 
         # self.RB_per_UE = RB_per_UE
         # self.opt_UE_per_RB = opt_UE_per_RB
